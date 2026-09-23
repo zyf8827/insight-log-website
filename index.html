@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Insight Log - 轻量级跨平台本地日志搜索桌面应用</title>
+  <meta name="description" content="Insight Log 是一款基于 Tauri 2 + Rust + React 的轻量级跨平台本地日志搜索桌面应用。支持目录与 ZIP/TAR/GZ/7z 内检索、多条件管道过滤与正则表达式。">
+  <meta name="keywords" content="Insight Log, 日志检索, 本地搜索, Tauri 2, Rust, 管道过滤, 7z, 日志分析">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="apple-touch-icon" href="assets/logo.png">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Insight Log - 轻量级跨平台本地日志搜索桌面应用">
+  <meta property="og:description" content="选择目录即可检索普通文本与 ZIP/TAR/GZ/7z 归档日志，支持管道过滤与正则。">
+  <meta property="og:image" content="assets/hero.png">
+  <meta property="og:type" content="website">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="#" class="brand">
+        <img src="assets/logo.png" alt="Insight Log Logo" class="brand-logo" width="32" height="32">
+        <span class="brand-name">Insight Log</span>
+        <span class="brand-badge">Desktop</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#features">核心特性</a>
+        <a href="#demo">互动演示</a>
+        <a href="#preview">界面预览</a>
+        <a href="#syntax">搜索语法</a>
+        <a href="#limitations">规格局限</a>
+        <a href="#quickstart">快速开始</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="https://github.com/zyf8827/insight-log" target="_blank" rel="noopener noreferrer" class="btn btn-github">
+          <svg class="github-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          <span>GitHub</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container hero-container">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        <span>跨平台 · 搜索优先 · 纯本地沙箱保护</span>
+      </div>
+
+      <h1 class="hero-title">
+        轻量级本地日志搜索<br>
+        <span class="text-gradient">穿透检索目录与压缩包</span>
+      </h1>
+
+      <p class="hero-subtitle">
+        基于 <strong>Tauri 2 + Rust + React 19</strong> 构建。选择目录即可秒级搜索普通文本与 <strong>ZIP / TAR / GZ / 7z</strong> 归档，支持多条件管道过滤与正则表达式，海量日志流畅呈现。
+      </p>
+
+      <div class="hero-cta-group">
+        <a href="https://github.com/zyf8827/insight-log" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+          前往 GitHub 源码
+          <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor">
+            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+          </svg>
+        </a>
+        <a href="#quickstart" class="btn btn-secondary">快速上手与构建</a>
+      </div>
+
+      <!-- Quick Command Bar -->
+      <div class="quick-command">
+        <span class="command-prompt">$</span>
+        <code id="clone-cmd">git clone https://github.com/zyf8827/insight-log.git</code>
+        <button class="copy-btn" id="copy-btn" title="复制克隆命令" aria-label="复制克隆命令">
+          <svg class="copy-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          <span class="copy-text">复制</span>
+        </button>
+      </div>
+
+      <!-- Hero Preview Mockup -->
+      <div class="hero-preview-wrapper">
+        <div class="window-frame">
+          <div class="window-header">
+            <div class="window-buttons">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+            </div>
+            <div class="window-title">Insight Log — 桌面端实际运行界面</div>
+            <div class="window-placeholder"></div>
+          </div>
+          <div class="window-body">
+            <img src="assets/hero.png" alt="Insight Log 软件主界面截图" class="hero-image" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Metrics / Highlights Bar -->
+  <section class="metrics-bar">
+    <div class="container metrics-grid">
+      <div class="metric-item">
+        <div class="metric-value">0 解压步骤</div>
+        <div class="metric-label">ZIP / TAR / GZ / 7z 原生魔数穿透</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-value">管道 AND 过滤</div>
+        <div class="metric-label">多条件链式过滤精准收敛异常</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-value">万级流畅</div>
+        <div class="metric-label">基于 TanStack 虚拟列表按需渲染</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-value">沙箱防护</div>
+        <div class="metric-label">防路径穿越 + 单包/单文件限额保护</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">CORE CAPABILITIES</div>
+        <h2 class="section-title">为高效翻查日志量身定制</h2>
+        <p class="section-desc">抛弃沉重的全量解压与卡顿的文本编辑器，提供纯粹、专注、高性能的本地检索体验。</p>
+      </div>
+
+      <div class="features-grid">
+        <!-- Feature 1 -->
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </div>
+          <h3 class="feature-title">搜索优先与清爽布局</h3>
+          <p class="feature-text">主搜索条占据第一视觉中心，快捷键 <code>Ctrl/Cmd + F</code> 快速唤起；高级筛选收纳折叠，侧栏目录树按需展开，把宝贵屏宽留给结果。</p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="4" y1="9" x2="20" y2="9"></line>
+              <line x1="4" y1="15" x2="20" y2="15"></line>
+              <line x1="10" y1="3" x2="8" y2="21"></line>
+              <line x1="16" y1="3" x2="14" y2="21"></line>
+            </svg>
+          </div>
+          <h3 class="feature-title">管道式多条件 AND 过滤</h3>
+          <p class="feature-text">输入 <code>error | timeout | 500</code> 表示同一行必须同时满足所有关键词（逻辑 AND，非 OR），层层递进锁定核心根因。</p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+              <line x1="12" y1="22.08" x2="12" y2="12"></line>
+            </svg>
+          </div>
+          <h3 class="feature-title">归档文件原生魔数穿透</h3>
+          <p class="feature-text">基于文件头魔数自动识别 <strong>ZIP、TAR、GZ、7z</strong>（含 <code>.tar.gz</code>），无需预先手动解压即可逐条目快速过滤扫描。</p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="4 7 4 4 20 4 20 7"></polyline>
+              <line x1="9" y1="20" x2="15" y2="20"></line>
+              <line x1="12" y1="4" x2="12" y2="20"></line>
+            </svg>
+          </div>
+          <h3 class="feature-title">字面量 / 正则自由切换</h3>
+          <p class="feature-text">默认按字面量精确匹配并自动转义特殊符号，开箱即用；勾选「正则表达式」即可直通后端 Rust <code>regex</code> 引擎的完整表达力。</p>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="3" y1="9" x2="21" y2="9"></line>
+              <line x1="9" y1="21" x2="9" y2="9"></line>
+            </svg>
+          </div>
+          <h3 class="feature-title">虚拟滚动与紧凑视图</h3>
+          <p class="feature-text">集成 <code>@tanstack/react-virtual</code> 动态高度虚拟列表，万级命中毫无卡顿；等宽行号列，高亮命中词并弱化非关键上下文。</p>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+            </svg>
+          </div>
+          <h3 class="feature-title">内置查看器与重叠合并</h3>
+          <p class="feature-text">前后 10 行上下文，临近匹配自动智能合并；配备内置文件查看器，一键跳转到源文件或压缩包内部条目的指定行位。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Demo Section -->
+  <section id="demo" class="section demo-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">TRY IT OUT</div>
+        <h2 class="section-title">体验管道搜索与匹配逻辑</h2>
+        <p class="section-desc">在下方模拟器中尝试不同的检索表达式，观察多条件 AND 过滤与高亮如何协同工作。</p>
+      </div>
+
+      <div class="demo-box">
+        <div class="demo-toolbar">
+          <div class="demo-input-group">
+            <span class="demo-search-icon">🔍</span>
+            <input type="text" id="demo-input" class="demo-input" value="error | timeout" placeholder="输入关键字或使用 | 进行链式过滤...">
+          </div>
+          <div class="demo-presets">
+            <span class="preset-label">快捷示例：</span>
+            <button class="preset-btn" data-query="timeout">timeout</button>
+            <button class="preset-btn active" data-query="error | timeout">error | timeout (AND)</button>
+            <button class="preset-btn" data-query="500 | connection">500 | connection</button>
+            <button class="preset-btn" data-query="auth">auth</button>
+          </div>
+        </div>
+
+        <div class="demo-results-header">
+          <span id="demo-summary">匹配统计：计算中...</span>
+          <span class="demo-hint">说明：同一行必须满足管道中每个条件</span>
+        </div>
+
+        <div class="demo-results-view" id="demo-results">
+          <!-- Dynamic rendered by script.js -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interface Preview Details -->
+  <section id="preview" class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">UI TOUR</div>
+        <h2 class="section-title">克制、高密度的开发运维界面</h2>
+        <p class="section-desc">每一像素都为提升翻查效率服务，减少认知负荷。</p>
+      </div>
+
+      <div class="preview-highlights-grid">
+        <div class="preview-item">
+          <div class="preview-num">01</div>
+          <h4>快捷折叠侧边栏</h4>
+          <p>默认收起侧栏文件树，释放 100% 水平视界给宽行日志；需要排查目录结构时一键展开。</p>
+        </div>
+        <div class="preview-item">
+          <div class="preview-num">02</div>
+          <h4>高级筛选面板</h4>
+          <p>Glob 包含与排除（如 <code>**/*.log</code>, <code>!*.tmp</code>）及上限结果限制折叠归纳，界面始终保持整洁。</p>
+        </div>
+        <div class="preview-item">
+          <div class="preview-num">03</div>
+          <h4>结果内二次即时过滤</h4>
+          <p>针对已搜出列表在前端执行即时过滤（按文件名或文本），无需重复发起重型 I/O 扫描。</p>
+        </div>
+        <div class="preview-item">
+          <div class="preview-num">04</div>
+          <h4>行号对齐与智能高亮</h4>
+          <p>代码行号固定等宽对齐，匹配词采用明亮标记，非匹配上下文柔和展示，层次分明。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Search Syntax Section -->
+  <section id="syntax" class="section syntax-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">SYNTAX GUIDE</div>
+        <h2 class="section-title">清晰明了的检索语法</h2>
+        <p class="section-desc">简单规则覆盖 99% 的本地排障场景。</p>
+      </div>
+
+      <div class="syntax-table-card">
+        <table class="syntax-table">
+          <thead>
+            <tr>
+              <th style="width: 28%;">搜索模式</th>
+              <th style="width: 32%;">示例</th>
+              <th style="width: 40%;">匹配语义</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>字面量搜索</strong>（默认）</td>
+              <td><code>timeout</code> 或 <code>[order_service]</code></td>
+              <td>精确字符匹配，特殊字符自动安全转义，开箱即查。</td>
+            </tr>
+            <tr>
+              <td><strong>管道多条件 AND</strong></td>
+              <td><code>error | database | connection</code></td>
+              <td><span class="tag-highlight">核心特性</span> 同一行须同时包含所有子片段（逻辑 AND，非 OR）。</td>
+            </tr>
+            <tr>
+              <td><strong>正则表达式</strong></td>
+              <td><code>(ERROR|WARN)-\d{4,5}</code></td>
+              <td>勾选「正则表达式」后激活后端 Rust <code>regex</code> 引擎语法。</td>
+            </tr>
+            <tr>
+              <td><strong>大小写敏感</strong></td>
+              <td><code>Exception</code> vs <code>exception</code></td>
+              <td>切换大小写敏感开关以精确区分或模糊忽略大小写。</td>
+            </tr>
+            <tr>
+              <td><strong>Glob 包含与排除</strong></td>
+              <td><code>**/*.log</code> / <code>!**/*.tmp</code></td>
+              <td>高级筛选面板中指定目标文件后缀或排除噪音文件。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Honest Limitations Section -->
+  <section id="limitations" class="section limitations-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag section-tag-warning">LIMITATIONS & SAFETY</div>
+        <h2 class="section-title">规格与局限说明（诚实列出）</h2>
+        <p class="section-desc">Insight Log 注重可控性与系统稳定性，不夸大宣传，明晰边界与设计取舍。</p>
+      </div>
+
+      <div class="limitations-grid">
+        <div class="limit-card">
+          <div class="limit-icon">⚠️</div>
+          <div class="limit-content">
+            <h4>压缩格式支持范围</h4>
+            <p>目前原生支持 <strong>ZIP / TAR / GZ / 7z</strong>（仅限未加密归档）。</p>
+            <p class="limit-note"><strong>明确不支持 RAR 格式</strong>，亦不支持带密码保护的加密压缩包。</p>
+          </div>
+        </div>
+
+        <div class="limit-card">
+          <div class="limit-icon">🛡️</div>
+          <div class="limit-content">
+            <h4>内存保护与大小限额</h4>
+            <p>为防止大型归档导致宿主内存溢出或遭遇 Zip Bomb：</p>
+            <ul class="limit-list">
+              <li>单文件最大搜索上限：<strong>100 MB</strong></li>
+              <li>压缩包单条目解压上限：<strong>20 MB</strong></li>
+              <li>压缩包累计解压上限：<strong>100 MB</strong></li>
+            </ul>
+            <p class="limit-note">超过上述硬上限的条目将被安全跳过并在控制台给出告警。</p>
+          </div>
+        </div>
+
+        <div class="limit-card">
+          <div class="limit-icon">🔒</div>
+          <div class="limit-content">
+            <h4>本地路径安全沙箱</h4>
+            <p>所有文件与归档读取范围被严格限制在用户当前选定的工作目录内，拒绝任何相对路径穿越（Path Traversal）。</p>
+            <p class="limit-note">配置标准 CSP 策略，本地 Webview 绝不外泄本地数据。</p>
+          </div>
+        </div>
+
+        <div class="limit-card">
+          <div class="limit-icon">💻</div>
+          <div class="limit-content">
+            <h4>个人开源项目定位</h4>
+            <p>作为面向开发者与 SRE 的开源桌面应用，功能以实际仓库代码与发布版本为准。</p>
+            <p class="limit-note">欢迎在 GitHub 提交 Issue 与 Pull Request 共同改进！</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Start Section -->
+  <section id="quickstart" class="section quickstart-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">GET STARTED</div>
+        <h2 class="section-title">快速开始与本地构建</h2>
+        <p class="section-desc">在您自己的工作机上编译运行 Insight Log。</p>
+      </div>
+
+      <div class="quickstart-container">
+        <!-- Prerequisites -->
+        <div class="prereq-card">
+          <h3 class="prereq-title">环境要求</h3>
+          <ul class="prereq-list">
+            <li><strong>Node.js</strong>：≥ 20</li>
+            <li><strong>pnpm</strong>：10+</li>
+            <li><strong>Rust</strong>：稳定版（推荐通过 <code>rustup</code> 安装）</li>
+            <li>
+              <strong>平台系统库</strong>：
+              <ul>
+                <li>Linux: <code>libgtk-3-dev</code>, <code>libwebkit2gtk-4.1-dev</code></li>
+                <li>Windows: <code>WebView2</code></li>
+                <li>macOS: <code>Xcode Command Line Tools</code></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Build Steps -->
+        <div class="steps-card">
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <h4>获取仓库源码</h4>
+              <pre class="code-block"><code>git clone https://github.com/zyf8827/insight-log.git
+cd insight-log</code></pre>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <h4>安装前端依赖</h4>
+              <pre class="code-block"><code>pnpm install</code></pre>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <h4>启动桌面端热重载开发</h4>
+              <pre class="code-block"><code>pnpm run dev:app
+# 或运行脚本: ./scripts/dev.sh</code></pre>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <h4>构建生产执行文件与自测</h4>
+              <pre class="code-block"><code># 快速生成可执行文件
+pnpm run build:app
+
+# 运行前后端完整单元检查
+pnpm run typecheck
+cargo test --manifest-path src-tauri/Cargo.toml</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-container">
+      <div class="footer-left">
+        <div class="footer-brand">
+          <img src="assets/logo.png" alt="Insight Log" width="24" height="24">
+          <span class="footer-title">Insight Log</span>
+        </div>
+        <p class="footer-desc">轻量级跨平台本地日志搜索桌面客户端 · Tauri 2 + Rust + React</p>
+        <p class="footer-copy">基于 <a href="https://github.com/zyf8827/insight-log/blob/main/LICENSE" target="_blank" rel="noopener">MIT License</a> 开源 · Copyright &copy; 2026 zyf8827</p>
+      </div>
+
+      <div class="footer-links">
+        <div class="footer-col">
+          <h5>开源仓库</h5>
+          <a href="https://github.com/zyf8827/insight-log" target="_blank" rel="noopener">产品主仓库 (insight-log)</a>
+          <a href="https://github.com/zyf8827/insight-log-website" target="_blank" rel="noopener">官网源码 (insight-log-website)</a>
+          <a href="https://github.com/zyf8827/insight-log/issues" target="_blank" rel="noopener">提交 Issue / 反馈</a>
+        </div>
+        <div class="footer-col">
+          <h5>项目文档</h5>
+          <a href="https://github.com/zyf8827/insight-log/blob/main/README.md" target="_blank" rel="noopener">README 说明</a>
+          <a href="https://github.com/zyf8827/insight-log/blob/main/docs/SPEC.md" target="_blank" rel="noopener">规格说明 (SPEC.md)</a>
+          <a href="https://github.com/zyf8827/insight-log/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">贡献指南 (CONTRIBUTING)</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+</body>
+</html>
