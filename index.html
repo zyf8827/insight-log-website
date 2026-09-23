@@ -32,6 +32,7 @@
 
       <nav class="nav-links">
         <a href="#features">核心特性</a>
+        <a href="#download">下载</a>
         <a href="#demo">互动演示</a>
         <a href="#preview">界面预览</a>
         <a href="#syntax">搜索语法</a>
@@ -68,13 +69,14 @@
       </p>
 
       <div class="hero-cta-group">
-        <a href="https://github.com/zyf8827/insight-log" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-          前往 GitHub 源码
+        <a href="#download" class="btn btn-primary">
+          下载 v0.1.0
           <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor">
-            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+            <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/>
           </svg>
         </a>
-        <a href="#quickstart" class="btn btn-secondary">快速上手与构建</a>
+        <a href="https://github.com/zyf8827/insight-log" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">GitHub 源码</a>
+        <a href="#quickstart" class="btn btn-secondary">自行构建</a>
       </div>
 
       <!-- Quick Command Bar -->
@@ -398,6 +400,89 @@
     </div>
   </section>
 
+
+  <!-- Download Section -->
+  <section id="download" class="section download-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">DOWNLOAD</div>
+        <h2 class="section-title">下载 Insight Log v0.1.0</h2>
+        <p class="section-desc">开源 MIT。预构建安装包来自 GitHub Release；未做商业代码签名，系统可能拦截首次运行。</p>
+      </div>
+
+      <div class="download-grid">
+        <div class="download-card">
+          <div class="download-platform">Linux <span class="platform-arch">x86_64</span></div>
+          <ul class="download-list">
+            <li>
+              <a class="download-link" href="https://github.com/zyf8827/insight-log/releases/download/v0.1.0/insight-log_0.1.0_amd64.deb">
+                <span class="dl-name">.deb</span>
+                <span class="dl-file">insight-log_0.1.0_amd64.deb</span>
+              </a>
+            </li>
+            <li>
+              <a class="download-link" href="https://github.com/zyf8827/insight-log/releases/download/v0.1.0/insight-log_0.1.0_amd64.AppImage">
+                <span class="dl-name">AppImage</span>
+                <span class="dl-file">insight-log_0.1.0_amd64.AppImage</span>
+              </a>
+            </li>
+            <li>
+              <a class="download-link" href="https://github.com/zyf8827/insight-log/releases/download/v0.1.0/insight-log-0.1.0-1.x86_64.rpm">
+                <span class="dl-name">.rpm</span>
+                <span class="dl-file">insight-log-0.1.0-1.x86_64.rpm</span>
+              </a>
+            </li>
+          </ul>
+          <p class="download-note">AppImage 需 <code>chmod +x</code>；部分发行版需要 <code>libfuse2</code>。</p>
+        </div>
+
+        <div class="download-card">
+          <div class="download-platform">Windows <span class="platform-arch">x64</span></div>
+          <ul class="download-list">
+            <li>
+              <a class="download-link" href="https://github.com/zyf8827/insight-log/releases/download/v0.1.0/insight-log_0.1.0_x64-setup.exe">
+                <span class="dl-name">NSIS</span>
+                <span class="dl-file">insight-log_0.1.0_x64-setup.exe</span>
+              </a>
+            </li>
+            <li>
+              <a class="download-link" href="https://github.com/zyf8827/insight-log/releases/download/v0.1.0/insight-log_0.1.0_x64_en-US.msi">
+                <span class="dl-name">MSI</span>
+                <span class="dl-file">insight-log_0.1.0_x64_en-US.msi</span>
+              </a>
+            </li>
+          </ul>
+          <p class="download-note">若 SmartScreen 拦截，可点「更多信息」→「仍要运行」。</p>
+        </div>
+
+        <div class="download-card">
+          <div class="download-platform">macOS <span class="platform-arch">Apple Silicon</span></div>
+          <ul class="download-list">
+            <li>
+              <a class="download-link" href="https://github.com/zyf8827/insight-log/releases/download/v0.1.0/insight-log_0.1.0_aarch64.dmg">
+                <span class="dl-name">DMG</span>
+                <span class="dl-file">insight-log_0.1.0_aarch64.dmg</span>
+              </a>
+            </li>
+            <li>
+              <a class="download-link" href="https://github.com/zyf8827/insight-log/releases/download/v0.1.0/insight-log_aarch64.app.tar.gz">
+                <span class="dl-name">.app.tar.gz</span>
+                <span class="dl-file">insight-log_aarch64.app.tar.gz</span>
+              </a>
+            </li>
+          </ul>
+          <p class="download-note">未签名。若提示无法验证 / 已损坏，可在「隐私与安全性」选择仍要打开，或执行 <code>xattr -cr /Applications/insight-log.app</code>。</p>
+        </div>
+      </div>
+
+      <div class="download-actions">
+        <a class="btn btn-secondary" href="https://github.com/zyf8827/insight-log/releases/tag/v0.1.0" target="_blank" rel="noopener noreferrer">查看全部版本 / Release 页</a>
+        <a class="btn btn-secondary" href="#quickstart">自行从源码构建</a>
+      </div>
+      <p class="download-legal">预构建包与源码均按 MIT 许可分发。文件名以 <a href="https://github.com/zyf8827/insight-log/releases/tag/v0.1.0" target="_blank" rel="noopener noreferrer">v0.1.0 Release Assets</a> 为准。</p>
+    </div>
+  </section>
+
   <!-- Quick Start Section -->
   <section id="quickstart" class="section quickstart-section">
     <div class="container">
@@ -487,6 +572,7 @@ cargo test --manifest-path src-tauri/Cargo.toml</code></pre>
         <div class="footer-col">
           <h5>开源仓库</h5>
           <a href="https://github.com/zyf8827/insight-log" target="_blank" rel="noopener">产品主仓库 (insight-log)</a>
+          <a href="https://github.com/zyf8827/insight-log/releases/tag/v0.1.0" target="_blank" rel="noopener">下载 Release v0.1.0</a>
           <a href="https://github.com/zyf8827/insight-log-website" target="_blank" rel="noopener">官网源码 (insight-log-website)</a>
           <a href="https://github.com/zyf8827/insight-log/issues" target="_blank" rel="noopener">提交 Issue / 反馈</a>
         </div>
